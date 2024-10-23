@@ -1,20 +1,36 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react';
+import { getDocumentTypes } from '../services/api';
 
 function Form() {
+  const [documentTypes, setDocumentTypes] = useState([]);
+  const [quotation, setQuotation] = useState(null);
+
+  useEffect(() => {
+    const fetchDocumentTypes = async () => {
+      try {
+        const types = await getDocumentTypes();
+        setDocumentTypes(types);
+      } catch (error) {
+        console.error('Error fetching document types:', error);
+      }
+    };
+
+    
+    fetchDocumentTypes();
+  }, []);
+
   return (
     <>
       <h1 className='font-bold text-3xl text-center py-12'>Llena los siguientes datos:</h1>
       <div className="flex justify-center">
         <form className="w-80">
-
           <div className="mb-5">
             <label htmlFor="tipoIdentificacion" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo de documento de identificación:</label>
             <select id="tipoIdentificacion" className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg block w-full p-2.5" required>
               <option value="">Seleccione una opción</option>
-              <option value="cc">Cédula de ciudadanía</option>
-              <option value="ce">Cédula de extranjería</option>
-              <option value="nit">NIT</option>
-              <option value="ti">Tarjeta de identidad</option>
+              {documentTypes.map((type) => (
+                <option key={type.value} value={type.value}>{type.label}</option>
+              ))}
             </select>
           </div>
 
@@ -32,7 +48,7 @@ function Form() {
         </form>
       </div>
     </>
-  )
+  );
 }
 
-export default Form
+export default Form;
