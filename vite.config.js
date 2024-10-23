@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: import.meta.env.VITE_API_URL,
+        target: 'https://dev.same.com.co/api/public/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
