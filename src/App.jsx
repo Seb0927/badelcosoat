@@ -1,9 +1,9 @@
 import { useState } from 'react'
 import Navbar from './components/Navbar'
-import Badelco from './components/Placeholder'
+import Placeholder from './components/Placeholder'
+import Form from './components/Form'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
-import Placeholder from './components/Placeholder'
 
 function App() {
   const [count, setCount] = useState(0)
@@ -12,6 +12,7 @@ function App() {
     <>
       <Navbar />
       <Placeholder />
+      <Form />
     </>
   )
 }

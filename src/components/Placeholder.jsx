@@ -2,7 +2,7 @@ import React from 'react'
 
 function Placeholder() {
   return (
-    <div className="flex justify-center">
+    <div className="flex justify-center my-2">
       <img
         alt='Imagen de logo de Badelco junto a un texto debajo del logo indicando el sitio web principal de la empresa: Badelco.co'
         src="/badelco.jpg"
