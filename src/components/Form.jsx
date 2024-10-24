@@ -1,22 +1,30 @@
 import React, { useEffect, useState, useRef } from 'react';
+import Modal from './Modal';
+import Loading from './Loading'
 import { getDocumentTypes, getQuotation } from '../services/api';
 
 function Form() {
   const [documentTypes, setDocumentTypes] = useState([]);
   const [quotation, setQuotation] = useState(null);
+  const [isModalVisible, setIsModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState({});
 
   const tipoIdentificacionRef = useRef();
   const identificacionRef = useRef();
   const placaRef = useRef();
 
   const fetchQuotation = async (numPlaca, numDocumento, codTipoDoc, codProducto = 63) => {
+    setIsLoading(true)
     try {
       const quotation = await getQuotation(numPlaca, numDocumento, codTipoDoc, codProducto);
       setQuotation(quotation);
       console.log('Quotation:', quotation);
+      setIsModalVisible(true);
     } catch (error) {
       console.error('Error fetching quotation:', error);
     }
+    setIsLoading(false)
   };
 
   const handleSubmit = (e) => {
@@ -24,6 +32,7 @@ function Form() {
     const numPlaca = placaRef.current.value;
     const numDocumento = identificacionRef.current.value;
     const codTipoDoc = tipoIdentificacionRef.current.value;
+    setFormData({ tipoIdentificacion: codTipoDoc, numDocumento });
     fetchQuotation(numPlaca, numDocumento, codTipoDoc);
 
     tipoIdentificacionRef.current.value = "";
@@ -33,6 +42,7 @@ function Form() {
 
   useEffect(() => {
     const fetchDocumentTypes = async () => {
+      setIsLoading(true)
       try {
         const types = await getDocumentTypes();
         setDocumentTypes(types);
@@ -40,6 +50,7 @@ function Form() {
       } catch (error) {
         console.error('Error fetching document types:', error);
       }
+      setIsLoading(false)
     };
 
     fetchDocumentTypes();
@@ -47,6 +58,7 @@ function Form() {
 
   return (
     <>
+      {isLoading? <Loading /> : null}
       <h1 className='font-bold text-3xl text-center py-12'>Llena los siguientes datos:</h1>
       <div className="flex justify-center">
         <form className="w-80" onSubmit={handleSubmit}>
@@ -73,6 +85,11 @@ function Form() {
           <button type="submit" className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm w-full sm:w-auto px-5 py-2.5 text-center">Enviar</button>
         </form>
       </div>
+
+      {isModalVisible? <Modal 
+      setisModalVisible={setIsModalVisible}
+      data={quotation.data}
+      formData={formData}></Modal> : null}
     </>
   );
 }
