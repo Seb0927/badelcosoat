@@ -1,6 +1,6 @@
 import { Mail, Phone, Facebook, Search, MapPin } from 'lucide-react'
 
-function Navbar(){
+function Navbar() {
   return (
     <header className="bg-white shadow-sm">
       <div className="px-4 py-2">
@@ -15,10 +15,10 @@ function Navbar(){
             <a href="https://www.facebook.com/Badelco.co/" className="text-gray-800 ">
               <Facebook size={18} />
             </a>
-            <MapPin className="sm:text-gray-800" size={18}/>
+            <MapPin className="sm:text-gray-800" size={18} />
             <p className="hidden sm:block text-sm font-medium">Cali - Colombia</p>
           </div>
-          
+
           <div className="flex items-center space-x-4">
             <p className="text-sm font-medium">
               3128433999

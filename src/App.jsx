@@ -6,13 +6,18 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [step, setStep] = useState(0);
+  const [formData, setFormData] = useState({});
+  const [quotation, setQuotation] = useState(null);
 
   return (
     <>
       <Navbar />
-      <Placeholder />
-      <Form />
+      {step === 0 ?
+        <>
+          <Placeholder />
+          <Form setStep={setStep} formData={formData} setFormData={setFormData} quotation={quotation} setQuotation={setQuotation} />
+        </> : null}
     </>
   )
 }

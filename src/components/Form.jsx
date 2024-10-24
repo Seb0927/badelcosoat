@@ -3,12 +3,13 @@ import Modal from './Modal';
 import Loading from './Loading'
 import { getDocumentTypes, getQuotation } from '../services/api';
 
-function Form() {
-  const [documentTypes, setDocumentTypes] = useState([]);
-  const [quotation, setQuotation] = useState(null);
+function Form(props) {
+  const { setStep, formData, setFormData, quotation, setQuotation } = props;
+
+  const [documentTypes, setDocumentTypes] = useState([]); 
   const [isModalVisible, setIsModalVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({});
+  
 
   const tipoIdentificacionRef = useRef();
   const identificacionRef = useRef();
@@ -18,8 +19,7 @@ function Form() {
     setIsLoading(true)
     try {
       const quotation = await getQuotation(numPlaca, numDocumento, codTipoDoc, codProducto);
-      setQuotation(quotation);
-      console.log('Quotation:', quotation);
+      setQuotation(quotation.data);
       setIsModalVisible(true);
     } catch (error) {
       console.error('Error fetching quotation:', error);
@@ -88,8 +88,34 @@ function Form() {
 
       {isModalVisible? <Modal 
       setisModalVisible={setIsModalVisible}
-      data={quotation.data}
-      formData={formData}></Modal> : null}
+      title={"Confirma la información"}>
+        {/* Modal body */}
+        <div className="p-4 md:p-5 space-y-2">
+          <h3 className="text-lg font-semibold ">Información personal</h3>
+            <ul className="max-w-md space-y-0 list-none list-inside">
+              <li><span className="font-semibold">Tipo de documento:</span> {formData.tipoIdentificacion} </li>
+              <li><span className="font-semibold">Número de identificación:</span> {formData.numDocumento} </li>
+            </ul>
+
+            <hr className="h-px bg-gray-200 border-0 dark:bg-gray-700"></hr>
+
+            <h3 className="text-lg font-semibold ">Información del vehículo</h3>
+            <ul className="max-w-md space-y-0 list-none list-inside">
+              <li><span className="font-semibold">Placa:</span> {quotation.NumberPlate} </li>
+              <li><span className="font-semibold">Marca:</span> {quotation.BrandName} </li>
+              <li><span className="font-semibold">Linea:</span> {quotation.VehicleLineDescription} </li>
+              <li><span className="font-semibold">Año:</span> {quotation.VehicleYear} </li>
+              <li><span className="font-semibold">Tipo de vehículo:</span> {quotation.VehicleClassMinistryName} </li>
+              <li><span className="font-semibold">Servicio:</span> {quotation.ServiceTypeName} </li>
+            </ul>
+          </div>
+
+          {/* Modal footer */}
+          <div className="flex items-center p-4 md:p-5 border-t border-gray-200 rounded-b ">
+            <button data-modal-hide="medium-modal" type="button" onClick={() => setStep(1)} className="text-white bg-orange-700 hover:bg-orange-800 focus:ring-4 focus:outline-none focus:ring-orange-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center">Continuar</button>
+            <button data-modal-hide="medium-modal" type="button" onClick={() => setIsModalVisible(false)} className="py-2.5 px-5 ms-3 text-sm font-medium text-gray-900 focus:outline-none bg-white rounded-lg border border-gray-200 hover:bg-gray-100 hover:text-orange-700 focus:z-10 focus:ring-4 focus:ring-gray-100">Cancelar</button>
+          </div>
+      </Modal> : null}
     </>
   );
 }
