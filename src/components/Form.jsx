@@ -33,7 +33,7 @@ function Form(props) {
     const numDocumento = identificacionRef.current.value;
     const codTipoDoc = tipoIdentificacionRef.current.value;
     const tipoIdentificacionFormatted = tipoIdentificacionRef.current.options[tipoIdentificacionRef.current.selectedIndex].text;
-    setFormData({ tipoIdentificacion: codTipoDoc, numDocumento, tipoIdentificacionFormatted });
+    setFormData({ DocumentTypeId: codTipoDoc, DocumentNumber: numDocumento, tipoIdentificacionFormatted });
     fetchQuotation(numPlaca, numDocumento, codTipoDoc);
 
     tipoIdentificacionRef.current.value = "";
