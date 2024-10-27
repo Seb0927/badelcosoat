@@ -1,25 +1,61 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import { ChevronDown } from 'lucide-react'
+import { getDepartments, getCities } from '../services/api'
 
-function BillingForm() {
-  const [department, setDepartment] = useState('')
+function BillingForm({ formData, setFormData }) {
+  const [departments, setDepartments] = useState([])
+  const [cities, setCities] = useState([]);
+  const [selectedDept, setSelectedDept] = useState('');
+
+  useEffect(() => {
+    const fetchDepartments = async () => {
+      try {
+        const deptos = await getDepartments();
+        console.log(deptos)
+        setDepartments(deptos);
+      } catch (error) {
+        console.error('Error fetching departments:', error);
+      }
+    };
+
+    fetchDepartments();
+  }, []);
+
+  useEffect(() => {
+    if (selectedDept) {
+      const fetchCities = async () => {
+        try {
+          const cities = await getCities(selectedDept);
+          setCities(cities);
+        } catch (error) {
+          console.error('Error fetching cities:', error);
+        }
+      };
+
+      fetchCities();
+    }
+  }, [selectedDept]);
 
   return (
     <form className="space-y-4">
       <div className="flex flex-col md:flex-row gap-4">
-        <div className="w-full md:w-1/2">
+        <div className="w-full md:w-1/4">
           <label htmlFor="nombre" className="block mb-1">Nombre *</label>
           <input type="text" id="nombre" className="w-full border rounded px-3 py-2" required />
         </div>
+        <div className="w-full md:w-1/4">
+          <label htmlFor="nombre" className="block mb-1">Segundo nombre</label>
+          <input type="text" id="nombre" className="w-full border rounded px-3 py-2" />
+        </div>
         <div className="w-full md:w-1/2">
-          <label htmlFor="apellidos" className="block mb-1">Apellidos *</label>
+          <label htmlFor="apellidos" className="block mb-1">Apellidos </label>
           <input type="text" id="apellidos" className="w-full border rounded px-3 py-2" required />
         </div>
       </div>
 
       <div>
-        <label htmlFor="empresa" className="block mb-1">Nombre de la empresa (opcional)</label>
-        <input type="text" id="empresa" className="w-full border rounded px-3 py-2" />
+        <label htmlFor="numDocumento" className="block mb-1 font-bold">{formData.tipoIdentificacionFormatted} :</label>
+        <input type="text" id="numDocumento" className="w-full border rounded px-3 py-2" defaultValue={formData.numDocumento} disabled />
       </div>
 
       <div>
@@ -47,19 +83,26 @@ function BillingForm() {
       </div>
 
       <div>
-        <label htmlFor="departamento" className="block mb-1">Departamento *</label>
+        <label htmlFor="StateId" className="block mb-1">Departamento *</label>
         <div className="relative">
-          <select
-            id="departamento"
-            className="w-full border rounded px-3 py-2 appearance-none"
-            value={department}
-            onChange={(e) => setDepartment(e.target.value)}
-            required
-          >
-            <option value="">Elige una opción...</option>
-            <option value="Antioquia">Antioquia</option>
-            <option value="Bogotá">Bogotá</option>
-            <option value="Valle del Cauca">Valle del Cauca</option>
+          <select id="StateId" className="w-full border rounded px-3 py-2 appearance-none" onChange={(e) => setSelectedDept(e.target.value)} required>
+            <option value="">Seleccione una opción</option>
+            {departments.map((dept) => (
+              <option key={dept.value} value={dept.value}>{dept.label}</option>
+            ))}
+          </select>
+          <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2" />
+        </div>
+      </div>
+
+      <div>
+        <label htmlFor="CityId" className="block mb-1">Ciudad *</label>
+        <div className="relative">
+          <select id="CityId" className="w-full border rounded px-3 py-2 appearance-none" required>
+            <option value="">Seleccione una opción</option>
+            {cities.map((city) => (
+              <option key={city.value} value={city.value}>{city.label}</option>
+            ))}
           </select>
           <ChevronDown className="absolute right-3 top-1/2 transform -translate-y-1/2" />
         </div>

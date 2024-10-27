@@ -44,3 +44,26 @@ export const getQuotation = async (numPlaca, numDocumento, codTipoDoc, codProduc
   return response.data;
 };
 
+export const getDepartments = async () => {
+  if (!authToken) {
+    await fetchAuthToken();
+  }
+
+  const response = await api.get('/deptos');
+  console.log(response)
+  return response.data.list;
+};
+
+export const getCities = async (codDepto) => {
+  if (!authToken) {
+    await fetchAuthToken();
+  }
+
+  const response = await api.get('/ciudades', {
+    params: {
+      codDepto,
+    }
+  });
+  return response.data.list;
+};
+
