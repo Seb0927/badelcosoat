@@ -44,26 +44,26 @@ function BillingForm({ formData, setFormData, setIsLoading }) {
     <form className="space-y-4">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="w-full md:w-1/4">
-          <label htmlFor="nombre" className="block mb-1">Primer Nombre *</label>
-          <input type="text" id="nombre" className="w-full border rounded px-3 py-2" required />
+          <label htmlFor="FirstName" className="block mb-1">Primer Nombre *</label>
+          <input type="text" id="FirstName" className="w-full border rounded px-3 py-2" required />
         </div>
         <div className="w-full md:w-1/4">
-          <label htmlFor="nombre" className="block mb-1">Segundo nombre</label>
-          <input type="text" id="nombre" className="w-full border rounded px-3 py-2" />
+          <label htmlFor="FirstName1" className="block mb-1">Segundo nombre</label>
+          <input type="text" id="FirstName1" className="w-full border rounded px-3 py-2" />
         </div>
         <div className="w-full md:w-1/4">
-          <label htmlFor="apellidos" className="block mb-1">Primer apellido*</label>
-          <input type="text" id="apellidos" className="w-full border rounded px-3 py-2" required />
+          <label htmlFor="LastName" className="block mb-1">Primer apellido*</label>
+          <input type="text" id="LastName" className="w-full border rounded px-3 py-2" required />
         </div>
         <div className="w-full md:w-1/4">
-          <label htmlFor="apellidos" className="block mb-1">Segundo apellido</label>
-          <input type="text" id="apellidos" className="w-full border rounded px-3 py-2" />
+          <label htmlFor="LastName1" className="block mb-1">Segundo apellido</label>
+          <input type="text" id="LastName1" className="w-full border rounded px-3 py-2" />
         </div>
       </div>
 
       <div>
-        <label htmlFor="numDocumento" className="block mb-1 font-bold">{formData.tipoIdentificacionFormatted} :</label>
-        <input type="text" id="numDocumento" className="w-full border rounded px-3 py-2" defaultValue={formData.numDocumento} disabled />
+        <label htmlFor="DocumentNumber" className="block mb-1 font-bold">{formData.tipoIdentificacionFormatted} :</label>
+        <input type="text" id="DocumentNumber" className="w-full border rounded px-3 py-2" defaultValue={formData.numDocumento} disabled />
       </div>
 
       <div>
@@ -82,8 +82,8 @@ function BillingForm({ formData, setFormData, setIsLoading }) {
       </div>
 
       <div>
-        <label htmlFor="direccion" className="block mb-1">Dirección de residencia *</label>
-        <input type="text" id="direccion" className="w-full border rounded px-3 py-2" placeholder="Dirección" required />
+        <label htmlFor="Address" className="block mb-1">Dirección de residencia *</label>
+        <input type="text" id="Adress" className="w-full border rounded px-3 py-2" placeholder="Dirección" required />
       </div>
 
       <div>
@@ -113,12 +113,12 @@ function BillingForm({ formData, setFormData, setIsLoading }) {
       </div>
 
       <div>
-        <label htmlFor="telefono" className="block mb-1">Teléfono Celular *</label>
-        <input type="tel" id="telefono" className="w-full border rounded px-3 py-2" required />
+        <label htmlFor="Celullar" className="block mb-1">Teléfono Celular *</label>
+        <input type="tel" id="Celullar" className="w-full border rounded px-3 py-2" required />
       </div>
 
       <div>
-        <label htmlFor="email" className="block mb-1">Dirección de correo electrónico *</label>
+        <label htmlFor="Email" className="block mb-1">Dirección de correo electrónico *</label>
         <input type="email" id="email" className="w-full border rounded px-3 py-2" required />
       </div>
     </form>
