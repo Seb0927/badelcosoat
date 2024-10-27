@@ -44,16 +44,20 @@ function BillingForm({ formData, setFormData, setIsLoading }) {
     <form className="space-y-4">
       <div className="flex flex-col md:flex-row gap-4">
         <div className="w-full md:w-1/4">
-          <label htmlFor="nombre" className="block mb-1">Nombre *</label>
+          <label htmlFor="nombre" className="block mb-1">Primer Nombre *</label>
           <input type="text" id="nombre" className="w-full border rounded px-3 py-2" required />
         </div>
         <div className="w-full md:w-1/4">
           <label htmlFor="nombre" className="block mb-1">Segundo nombre</label>
           <input type="text" id="nombre" className="w-full border rounded px-3 py-2" />
         </div>
-        <div className="w-full md:w-1/2">
-          <label htmlFor="apellidos" className="block mb-1">Apellidos </label>
+        <div className="w-full md:w-1/4">
+          <label htmlFor="apellidos" className="block mb-1">Primer apellido*</label>
           <input type="text" id="apellidos" className="w-full border rounded px-3 py-2" required />
+        </div>
+        <div className="w-full md:w-1/4">
+          <label htmlFor="apellidos" className="block mb-1">Segundo apellido</label>
+          <input type="text" id="apellidos" className="w-full border rounded px-3 py-2" />
         </div>
       </div>
 
@@ -118,7 +122,7 @@ function BillingForm({ formData, setFormData, setIsLoading }) {
       </div>
 
       <div>
-        <label htmlFor="telefono" className="block mb-1">Teléfono *</label>
+        <label htmlFor="telefono" className="block mb-1">Teléfono Celular*</label>
         <input type="tel" id="telefono" className="w-full border rounded px-3 py-2" required />
       </div>
 
