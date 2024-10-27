@@ -2,13 +2,14 @@ import { useState, useEffect } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { getDepartments, getCities } from '../services/api'
 
-function BillingForm({ formData, setFormData }) {
+function BillingForm({ formData, setFormData, setIsLoading }) {
   const [departments, setDepartments] = useState([])
   const [cities, setCities] = useState([]);
   const [selectedDept, setSelectedDept] = useState('');
 
   useEffect(() => {
     const fetchDepartments = async () => {
+      setIsLoading(true);
       try {
         const deptos = await getDepartments();
         console.log(deptos)
@@ -16,6 +17,7 @@ function BillingForm({ formData, setFormData }) {
       } catch (error) {
         console.error('Error fetching departments:', error);
       }
+      setIsLoading(false);
     };
 
     fetchDepartments();
@@ -23,6 +25,7 @@ function BillingForm({ formData, setFormData }) {
 
   useEffect(() => {
     if (selectedDept) {
+      setIsLoading(true);
       const fetchCities = async () => {
         try {
           const cities = await getCities(selectedDept);
@@ -30,6 +33,7 @@ function BillingForm({ formData, setFormData }) {
         } catch (error) {
           console.error('Error fetching cities:', error);
         }
+        setIsLoading(false);
       };
 
       fetchCities();
