@@ -7,7 +7,6 @@ const api = axios.create({
 let authToken = null;
 
 const fetchAuthToken = async () => {
-  console.log(import.meta.env.VITE_API_URL)
   try {
     const response = await api.get('/token', {
       headers: {
