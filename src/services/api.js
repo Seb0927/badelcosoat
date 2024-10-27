@@ -1,15 +1,14 @@
 import axios from 'axios';
 
 const api = axios.create({
-  baseURL: '/api/proxy',
+  baseURL: import.meta.env.VITE_API_URL,
 });
 
 let authToken = null;
 
 const fetchAuthToken = async () => {
   try {
-    const response = await api.get('/', {
-      params: { path: 'token' },
+    const response = await api.get('/token', {
       headers: {
         'apiKey': import.meta.env.VITE_API_KEY,
         'secretKey': import.meta.env.VITE_SECRET_KEY,
@@ -26,9 +25,7 @@ export const getDocumentTypes = async () => {
   if (!authToken) {
     await fetchAuthToken();
   }
-  const response = await api.get('/', {
-    params: { path: 'tipdoc' },
-  });
+  const response = await api.get('/tipdoc');
   return response.data.list;
 };
 
@@ -36,9 +33,8 @@ export const getQuotation = async (numPlaca, numDocumento, codTipoDoc, codProduc
   if (!authToken) {
     await fetchAuthToken();
   }
-  const response = await api.get('/', {
+  const response = await api.get('/soat', {
     params: {
-      path: 'soat',
       codProducto,
       numPlaca,
       numDocumento,
@@ -52,9 +48,9 @@ export const getDepartments = async () => {
   if (!authToken) {
     await fetchAuthToken();
   }
-  const response = await api.get('/', {
-    params: { path: 'deptos' },
-  });
+
+  const response = await api.get('/deptos');
+  console.log(response)
   return response.data.list;
 };
 
@@ -62,11 +58,12 @@ export const getCities = async (codDepto) => {
   if (!authToken) {
     await fetchAuthToken();
   }
-  const response = await api.get('/', {
+
+  const response = await api.get('/ciudades', {
     params: {
-      path: 'ciudades',
       codDepto,
-    },
+    }
   });
   return response.data.list;
 };
+
