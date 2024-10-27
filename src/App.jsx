@@ -2,6 +2,7 @@ import { useState } from 'react'
 import Navbar from './components/Navbar'
 import Placeholder from './components/Placeholder'
 import Form from './components/Form'
+import Billing from './components/Billing'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 
@@ -18,6 +19,9 @@ function App() {
           <Placeholder />
           <Form setStep={setStep} formData={formData} setFormData={setFormData} quotation={quotation} setQuotation={setQuotation} />
         </> : null}
+      {step === 1 ?
+        <Billing setStep={setStep} formData={formData} setFormData={setFormData} quotation={quotation} setQuotation={setQuotation} />
+        : null}
     </>
   )
 }

@@ -32,7 +32,8 @@ function Form(props) {
     const numPlaca = placaRef.current.value;
     const numDocumento = identificacionRef.current.value;
     const codTipoDoc = tipoIdentificacionRef.current.value;
-    setFormData({ tipoIdentificacion: codTipoDoc, numDocumento });
+    const tipoIdentificacionFormatted = tipoIdentificacionRef.current.options[tipoIdentificacionRef.current.selectedIndex].text;
+    setFormData({ DocumentTypeId: codTipoDoc, DocumentNumber: numDocumento, tipoIdentificacionFormatted });
     fetchQuotation(numPlaca, numDocumento, codTipoDoc);
 
     tipoIdentificacionRef.current.value = "";
@@ -46,7 +47,6 @@ function Form(props) {
       try {
         const types = await getDocumentTypes();
         setDocumentTypes(types);
-        console.log(types);
       } catch (error) {
         console.error('Error fetching document types:', error);
       }
