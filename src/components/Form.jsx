@@ -46,7 +46,6 @@ function Form(props) {
       try {
         const types = await getDocumentTypes();
         setDocumentTypes(types);
-        console.log(types);
       } catch (error) {
         console.error('Error fetching document types:', error);
       }
