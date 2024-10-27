@@ -82,12 +82,8 @@ function BillingForm({ formData, setFormData, setIsLoading }) {
       </div>
 
       <div>
-        <label htmlFor="direccion" className="block mb-1">Dirección de la calle *</label>
-        <input type="text" id="direccion" className="w-full border rounded px-3 py-2" placeholder="Nombre de la calle y número de la casa" required />
-      </div>
-
-      <div>
-        <input type="text" className="w-full border rounded px-3 py-2" placeholder="Apartamento, habitación, etc. (opcional)" />
+        <label htmlFor="direccion" className="block mb-1">Dirección de residencia *</label>
+        <input type="text" id="direccion" className="w-full border rounded px-3 py-2" placeholder="Dirección" required />
       </div>
 
       <div>
@@ -117,24 +113,13 @@ function BillingForm({ formData, setFormData, setIsLoading }) {
       </div>
 
       <div>
-        <label htmlFor="codigoPostal" className="block mb-1">Código postal / ZIP (opcional)</label>
-        <input type="text" id="codigoPostal" className="w-full border rounded px-3 py-2" />
-      </div>
-
-      <div>
-        <label htmlFor="telefono" className="block mb-1">Teléfono Celular*</label>
+        <label htmlFor="telefono" className="block mb-1">Teléfono Celular *</label>
         <input type="tel" id="telefono" className="w-full border rounded px-3 py-2" required />
       </div>
 
       <div>
         <label htmlFor="email" className="block mb-1">Dirección de correo electrónico *</label>
         <input type="email" id="email" className="w-full border rounded px-3 py-2" required />
-      </div>
-
-      <div>
-        <h2 className="text-xl font-bold mb-2">Información adicional</h2>
-        <label htmlFor="notas" className="block mb-1">Notas del pedido (opcional)</label>
-        <textarea id="notas" className="w-full border rounded px-3 py-2 h-32" placeholder="Notas sobre tu pedido, por ejemplo, notas especiales para la entrega."></textarea>
       </div>
     </form>
   )
