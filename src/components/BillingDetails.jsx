@@ -21,6 +21,18 @@ function BillingDetails(props) {
 
   const handleOrder = () => {
     const formElements = document.querySelectorAll('form input, form select');
+    let showAlert = false;
+
+    formElements.forEach(element => {
+      if (element.id && element.id !== 'FirstName1' && element.id !== 'LastName1' && !element.value) {
+      showAlert = true;
+      }
+    });
+
+    if (showAlert) {
+      alert(`Por favor, rellenar los campos obligatorios restantes.`);
+      return;
+    }
     const updatedFormData = { ...formData };
 
     formElements.forEach(element => {
