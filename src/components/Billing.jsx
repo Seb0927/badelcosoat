@@ -19,7 +19,14 @@ export default function Billing(props) {
             <BillingForm formData={formData} setFormData={setFormData} setIsLoading={setIsLoading} />
           </div>
           <div className="w-full md:w-1/3">
-            <BillingDetails paymentMethod={paymentMethod} setPaymentMethod={setPaymentMethod} quotation={quotation} setQuotation={setQuotation} />
+            <BillingDetails 
+              paymentMethod={paymentMethod} 
+              setPaymentMethod={setPaymentMethod} 
+              quotation={quotation} 
+              setQuotation={setQuotation} 
+              formData={formData} 
+              setFormData={setFormData} 
+            />
           </div>
         </div>
       </div>

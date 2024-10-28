@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react'
 import { ChevronDown } from 'lucide-react'
 import { getDepartments, getCities } from '../services/api'
 
-function BillingForm({ formData, setFormData, setIsLoading }) {
+function BillingForm({formData, setFormData, setIsLoading }) {
   const [departments, setDepartments] = useState([])
   const [cities, setCities] = useState([]);
   const [selectedDept, setSelectedDept] = useState('');

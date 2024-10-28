@@ -1,12 +1,12 @@
-import {useEffect} from 'react'
+import { useEffect } from 'react'
 
 function BillingDetails(props) {
-  const { paymentMethod, setPaymentMethod, quotation, setQuotation } = props
+  const { paymentMethod, setPaymentMethod, quotation, setQuotation, formData, setFormData } = props;
   const { BrandName, VehicleLineDescription, NumberPlate, NewTariff } = quotation;
   const { TotalWithDiscountAmount, TotalWithDiscountAmountFormatted, TotalFormatted, ElectricDiscount, ElectricDiscountFormatted, GasDiscount, GasDiscountFormatted, Law2161Discount } = NewTariff;
 
   const newQuotation = Math.round(TotalWithDiscountAmount * 2.59 * 0.01 * 1.19 + 800);
-  const finalPrice = newQuotation + TotalWithDiscountAmount
+  const finalPrice = newQuotation + TotalWithDiscountAmount;
 
   const formatCurrency = (value) => {
     return new Intl.NumberFormat('es-CO', { style: 'currency', currency: 'COP' }).format(value);
@@ -18,7 +18,32 @@ function BillingDetails(props) {
   useEffect(() => {
     setQuotation({ ...quotation, mercadoPago: newQuotation, finalPrice: finalPrice, mercadoPagoFormatted, finalPriceFormatted });
   }, []);
-  
+
+  const handleOrder = () => {
+    const formElements = document.querySelectorAll('form input, form select');
+    let showAlert = false;
+
+    formElements.forEach(element => {
+      if (element.id && element.id !== 'FirstName1' && element.id !== 'LastName1' && !element.value) {
+      showAlert = true;
+      }
+    });
+
+    if (showAlert) {
+      alert(`Por favor, rellenar los campos obligatorios restantes.`);
+      return;
+    }
+    const updatedFormData = { ...formData };
+
+    formElements.forEach(element => {
+      if (element.id) {
+        updatedFormData[element.id] = element.value;
+      }
+    });
+
+    setFormData(updatedFormData);
+    console.log('Form Data:', updatedFormData);
+  };
 
   return (
     <div className="bg-gray-100 p-6 rounded">
@@ -31,7 +56,7 @@ function BillingDetails(props) {
           </tr>
         </thead>
         <tbody>
-        <tr className="border-b">
+          <tr className="border-b">
             <td className="py-2">SOAT: {BrandName} {VehicleLineDescription} {NumberPlate}</td>
             <td className="text-right">{TotalFormatted}</td>
           </tr>
@@ -58,9 +83,9 @@ function BillingDetails(props) {
             <td className="text-right">{TotalWithDiscountAmountFormatted}</td>
           </tr>
           <tr className="border-b">
-              <td className="py-2">Servicios de pago</td>
-              <td className="text-right">{quotation.mercadoPagoFormatted}</td>
-            </tr>
+            <td className="py-2">Servicios de pago</td>
+            <td className="text-right">{quotation.mercadoPagoFormatted}</td>
+          </tr>
           <tr>
             <td className="py-2 font-bold">Total</td>
             <td className="text-right font-bold">{quotation.finalPriceFormatted}</td>
@@ -87,7 +112,10 @@ function BillingDetails(props) {
         Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web y otros propósitos descritos en nuestra política de privacidad.
       </p>
 
-      <button className="w-full bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-red-600 transition duration-300">
+      <button 
+        className="w-full bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-red-600 transition duration-300"
+        onClick={handleOrder}
+      >
         Realizar el pedido
       </button>
     </div>

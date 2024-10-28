@@ -7,7 +7,7 @@ export default defineConfig({
   server: {
     proxy: {
       '/api': {
-        target: 'https://dev.same.com.co/api/public/',
+        target: 'https://badelcoproxy-bqg3c2bvaufucrhe.canadacentral-01.azurewebsites.net/api/',
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ''),
       },
