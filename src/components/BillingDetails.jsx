@@ -1,4 +1,5 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react';
+import { createPreference } from '../services/api';
 
 function BillingDetails(props) {
   const { paymentMethod, setPaymentMethod, quotation, setQuotation, formData, setFormData } = props;
@@ -19,30 +20,55 @@ function BillingDetails(props) {
     setQuotation({ ...quotation, mercadoPago: newQuotation, finalPrice: finalPrice, mercadoPagoFormatted, finalPriceFormatted });
   }, []);
 
-  const handleOrder = () => {
+  const [validationErrors, setValidationErrors] = useState([]);
+
+  const handleOrder = async () => {
     const formElements = document.querySelectorAll('form input, form select');
-    let showAlert = false;
-
-    formElements.forEach(element => {
-      if (element.id && element.id !== 'FirstName1' && element.id !== 'LastName1' && !element.value) {
-      showAlert = true;
-      }
-    });
-
-    if (showAlert) {
-      alert(`Por favor, rellenar los campos obligatorios restantes.`);
-      return;
-    }
     const updatedFormData = { ...formData };
+    const errors = [];
 
     formElements.forEach(element => {
+      if (element.required && !element.value) {
+        errors.push(`${element.labels[0].innerText} is required`);
+      }
       if (element.id) {
         updatedFormData[element.id] = element.value;
       }
     });
 
+    if (errors.length > 0) {
+      setValidationErrors(errors);
+      return;
+    }
+
     setFormData(updatedFormData);
     console.log('Form Data:', updatedFormData);
+
+    // Create a preference for Mercado Pago
+    const item = {
+      title: `SOAT: ${BrandName} ${VehicleLineDescription} ${NumberPlate}`,
+      unit_price: quotation.finalPrice,
+      quantity: 1,
+      email: updatedFormData.Email,
+      name: updatedFormData.FirstName,
+      surname: updatedFormData.LastName,
+      phone_number: updatedFormData.Celullar,
+      address: updatedFormData.Address,
+      state_name: updatedFormData.StateId,
+      city_name: updatedFormData.CityId,
+      identification_number: updatedFormData.DocumentNumber,
+      identification_type: updatedFormData.DocumentTypeId
+    };
+
+    try {
+      const response = await createPreference(item);
+      console.log(response)
+
+      // Redirect to Mercado Pago Checkout Pro
+      window.location.href = response.init_point;
+    } catch (error) {
+      console.error('Error creating preference:', error);
+    }
   };
 
   return (
@@ -112,6 +138,14 @@ function BillingDetails(props) {
         Tus datos personales se utilizarán para procesar tu pedido, mejorar tu experiencia en esta web y otros propósitos descritos en nuestra política de privacidad.
       </p>
 
+      {validationErrors.length > 0 && (
+        <div className="text-red-600 mb-4">
+          {validationErrors.map((error, index) => (
+            <p key={index}>{error}</p>
+          ))}
+        </div>
+      )}
+
       <button 
         className="w-full bg-red-500 text-white py-2 px-4 rounded mt-4 hover:bg-red-600 transition duration-300"
         onClick={handleOrder}
@@ -122,4 +156,4 @@ function BillingDetails(props) {
   )
 }
 
-export default BillingDetails
+export default BillingDetails;

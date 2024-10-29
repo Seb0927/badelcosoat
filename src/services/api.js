@@ -8,7 +8,7 @@ let authToken = null;
 
 const fetchAuthToken = async () => {
   try {
-    const response = await api.get('/token', {
+    const response = await api.get('api/token', {
       headers: {
         'apiKey': import.meta.env.VITE_API_KEY,
         'secretKey': import.meta.env.VITE_SECRET_KEY,
@@ -25,7 +25,7 @@ export const getDocumentTypes = async () => {
   if (!authToken) {
     await fetchAuthToken();
   }
-  const response = await api.get('/tipdoc');
+  const response = await api.get('api/tipdoc');
   return response.data.list;
 };
 
@@ -33,7 +33,7 @@ export const getQuotation = async (numPlaca, numDocumento, codTipoDoc, codProduc
   if (!authToken) {
     await fetchAuthToken();
   }
-  const response = await api.get('/soat', {
+  const response = await api.get('api/soat', {
     params: {
       codProducto,
       numPlaca,
@@ -48,9 +48,7 @@ export const getDepartments = async () => {
   if (!authToken) {
     await fetchAuthToken();
   }
-
-  const response = await api.get('/deptos');
-  console.log(response)
+  const response = await api.get('api/deptos');
   return response.data.list;
 };
 
@@ -58,12 +56,21 @@ export const getCities = async (codDepto) => {
   if (!authToken) {
     await fetchAuthToken();
   }
-
-  const response = await api.get('/ciudades', {
+  const response = await api.get('api/ciudades', {
     params: {
       codDepto,
-    }
+    },
   });
   return response.data.list;
 };
 
+// New function to create a Mercado Pago preference
+export const createPreference = async (item) => {
+  try {
+    const response = await api.post('/create_preference', item);
+    return response.data;
+  } catch (error) {
+    console.error('Error creating preference:', error);
+    throw error;
+  }
+};
