@@ -83,7 +83,7 @@ function BillingForm({formData, setFormData, setIsLoading }) {
 
       <div>
         <label htmlFor="Address" className="block mb-1">Dirección de residencia *</label>
-        <input type="text" id="Adress" className="w-full border rounded px-3 py-2" placeholder="Dirección" required />
+        <input type="text" id="Address" className="w-full border rounded px-3 py-2" placeholder="Dirección" required />
       </div>
 
       <div>
@@ -119,7 +119,7 @@ function BillingForm({formData, setFormData, setIsLoading }) {
 
       <div>
         <label htmlFor="Email" className="block mb-1">Dirección de correo electrónico *</label>
-        <input type="email" id="email" className="w-full border rounded px-3 py-2" required />
+        <input type="email" id="Email" className="w-full border rounded px-3 py-2" required />
       </div>
     </form>
   )

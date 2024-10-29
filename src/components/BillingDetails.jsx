@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import { createPreference } from '../services/api';
+import { createBillSoat } from '../model/billSoat/billSoat';
 
 function BillingDetails(props) {
   const { paymentMethod, setPaymentMethod, quotation, setQuotation, formData, setFormData } = props;
@@ -54,18 +55,50 @@ function BillingDetails(props) {
       surname: updatedFormData.LastName,
       phone_number: updatedFormData.Celullar,
       address: updatedFormData.Address,
-      state_name: updatedFormData.StateId,
-      city_name: updatedFormData.CityId,
+      state_name: String(updatedFormData.StateId),
+      city_name: String(updatedFormData.CityId),
       identification_number: updatedFormData.DocumentNumber,
       identification_type: updatedFormData.DocumentTypeId
     };
 
+    console.log(item)
+
     try {
+      // Create mercagopago preference
       const response = await createPreference(item);
       console.log(response)
 
+      console.log({
+        mercadoPagoId: response.id,
+        quotation,
+        Address: updatedFormData.Address,
+        CityId: updatedFormData.CityId,
+        StateId: updatedFormData.StateId,
+        Celullar: updatedFormData.Celullar,
+        DocumentNumber: updatedFormData.DocumentNumber,
+        DocumentTypeId: updatedFormData.DocumentTypeId,
+        Email: updatedFormData.Email,
+        FirstName: updatedFormData.FirstName,
+        LastName: updatedFormData.LastName,
+      })
+
+      //Upload to Firebase
+      await createBillSoat({
+        mercadoPagoId: response.id,
+        quotation,
+        Address: updatedFormData.Address,
+        CityId: updatedFormData.CityId,
+        StateId: updatedFormData.StateId,
+        Celullar: updatedFormData.Celullar,
+        DocumentNumber: updatedFormData.DocumentNumber,
+        DocumentTypeId: updatedFormData.DocumentTypeId,
+        Email: updatedFormData.Email,
+        FirstName: updatedFormData.FirstName,
+        LastName: updatedFormData.LastName,
+      });
+
       // Redirect to Mercado Pago Checkout Pro
-      window.location.href = response.init_point;
+      // window.location.href = response.init_point;
     } catch (error) {
       console.error('Error creating preference:', error);
     }
