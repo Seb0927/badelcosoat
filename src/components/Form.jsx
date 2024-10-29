@@ -94,7 +94,7 @@ function Form(props) {
           <h3 className="text-lg font-semibold ">Información personal</h3>
           {formData && (
             <ul className="max-w-md space-y-0 list-none list-inside">
-              <li><span className="font-semibold">Tipo de documento:</span> {formData.DocumentTypeId} </li>
+              <li><span className="font-semibold">Tipo de documento:</span> {formData.tipoIdentificacionFormatted} </li>
               <li><span className="font-semibold">Número de identificación:</span> {formData.DocumentNumber} </li>
             </ul>
           )}
