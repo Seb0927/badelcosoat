@@ -63,7 +63,7 @@ function BillingForm({formData, setFormData, setIsLoading }) {
 
       <div>
         <label htmlFor="DocumentNumber" className="block mb-1 font-bold">{formData.tipoIdentificacionFormatted} :</label>
-        <input type="text" id="DocumentNumber" className="w-full border rounded px-3 py-2" defaultValue={formData.numDocumento} disabled />
+        <input type="text" id="DocumentNumber" className="w-full border rounded px-3 py-2" defaultValue={formData.DocumentNumber} disabled />
       </div>
 
       <div>
